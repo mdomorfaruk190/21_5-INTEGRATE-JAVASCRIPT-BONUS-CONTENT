@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons" id="buttons">
+            <button class="button clear">C</button>
+            <button class="button operator">/</button>
+            <button class="button operator">*</button>
+            <button class="button operator">-</button>
+
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button operator">+</button>
+
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button equal">=</button>
+
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button">0</button>
+        </div>
+    </div>
+<script>
+    const buttons = document.getElementById('buttons');
+    const display = document.getElementById('display');
+
+    buttons.addEventListener('click', function (event){
+        const button = event.target;
+
+        // condition for clean and equal
+        if(button.innerText === 'C' || button.innerText === '='){
+            if(button.innerText === '='){
+                const displayValue = display.value;
+                if(displayValue.indexOf('+') !== -1){
+                    displayResult('+');
+                } else if(displayValue.indexOf('-') !== -1){
+                    displayResult('-');
+                }else if(displayValue.indexOf('*') !== -1){
+                    displayResult('*');
+                }else if(displayValue.indexOf('/') !== -1){
+                    displayResult('/');
+                }
+                return 0;
+            }
+            display.value = '';
+            return 0;
+        }
+
+        // set value on display
+        const inputValue = button.innerText;
+        const currentDisplayValue = display.value;
+        const newDisplayValue = currentDisplayValue + inputValue;
+        display.value = newDisplayValue;
+    });
+
+    function displayResult(operator){
+        switch (operator){
+            case ('+'):
+            {
+                const firstNumber = getFirstNumber(operator);
+                const lastNumber = getLastNumber(operator);
+                const result = firstNumber + lastNumber;
+                display.value = result;
+                break;
+            }
+            case '-': {
+                const firstNumber = getFirstNumber(operator);
+                const lastNumber = getLastNumber(operator);
+                const result = firstNumber -  lastNumber;
+                display.value = result;
+                break;
+            }
+            case '*':{
+                const firstNumber = getFirstNumber(operator);
+                const lastNumber = getLastNumber(operator);
+                const result = firstNumber *  lastNumber;
+                display.value = result;
+                break;
+            }
+            case '/':{
+                const firstNumber = getFirstNumber(operator);
+                const lastNumber = getLastNumber(operator);
+                const result = firstNumber /  lastNumber;
+                display.value = result;
+                break;
+            }
+            default:
+                displayValue.value =  '';
+                break;
+        }
+    }
+
+    function getFirstNumber(operator){
+        const numbers = display.value.split(operator);
+        const firstNumber = parseInt(numbers[0]);
+        return firstNumber;
+    }
+
+    function getLastNumber(operator){
+        const numbers = display.value.split(operator);
+        const lastNumber = parseInt(numbers[1]);
+        return lastNumber;
+    }
+</script>
+</body>
+</html>
